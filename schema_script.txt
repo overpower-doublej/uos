@@ -1,0 +1,64 @@
+CREATE TABLE basket ( 
+	id                   integer NOT NULL  ,
+	title                varchar(100) NOT NULL  ,
+	content              text   ,
+	alram                datetime   ,
+	memo                 text   ,
+	CONSTRAINT pk_basket PRIMARY KEY ( id )
+ );
+
+CREATE TABLE score ( 
+	date                 datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+	CONSTRAINT pk_score PRIMARY KEY ( date )
+ );
+
+CREATE TABLE subject ( 
+	id                   varchar(5) NOT NULL  ,
+	year                 varchar(4) NOT NULL  ,
+	term                 varchar(3) NOT NULL  ,
+	subject_div          varchar(4) NOT NULL  ,
+	name                 varchar(100) NOT NULL  ,
+	dept                 varchar(15)   ,
+	credit               integer NOT NULL  ,
+	grade                integer   ,
+	CONSTRAINT pk_course PRIMARY KEY ( id )
+ );
+
+CREATE TABLE class ( 
+	id                   varchar(5) NOT NULL  ,
+	div                  varchar(2) NOT NULL  ,
+	time                 varchar(30)   ,
+	room                 varchar(20)   ,
+	pName                varchar(15)   ,
+	countMax             integer   ,
+	count                integer   ,
+	idDiv                varchar(7)   ,
+	CONSTRAINT pk_class PRIMARY KEY ( id, div ),
+	FOREIGN KEY ( id ) REFERENCES subject( id ) ON DELETE CASCADE ON UPDATE CASCADE
+ );
+
+CREATE TABLE schedule ( 
+	id                   varchar(7) NOT NULL  ,
+	CONSTRAINT pk_schedule PRIMARY KEY ( id ),
+	FOREIGN KEY ( id ) REFERENCES class( idDiv ) ON DELETE CASCADE ON UPDATE CASCADE
+ );
+
+CREATE TABLE score_d ( 
+	sid                  varchar(7) NOT NULL  ,
+	date                 datetime NOT NULL  ,
+	goal                 double NOT NULL  ,
+	CONSTRAINT Pk_score_d PRIMARY KEY ( sid, date ),
+	FOREIGN KEY ( sid ) REFERENCES schedule( id ) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY ( date ) REFERENCES score( date ) ON DELETE CASCADE ON UPDATE CASCADE
+ );
+
+CREATE TABLE sMemo ( 
+	sid                  varchar(7) NOT NULL  ,
+	img                  text   ,
+	date                 datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+	content              text   ,
+	title                varchar(20)  DEFAULT '제목 없음' ,
+	CONSTRAINT pk_sMemo PRIMARY KEY ( sid, date ),
+	FOREIGN KEY ( sid ) REFERENCES schedule( id ) ON DELETE CASCADE ON UPDATE CASCADE
+ );
+
