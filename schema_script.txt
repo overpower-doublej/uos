@@ -57,7 +57,7 @@ CREATE TABLE sMemo (
 	img                  text   ,
 	date                 datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ,
 	content              text   ,
-	title                varchar(20)  DEFAULT '¡¶∏Ò æ¯¿Ω' ,
+	title                varchar(20)  DEFAULT 'Ï†úÎ™© ÏóÜÏùå' ,
 	CONSTRAINT pk_sMemo PRIMARY KEY ( sid, date ),
 	FOREIGN KEY ( sid ) REFERENCES schedule( id ) ON DELETE CASCADE ON UPDATE CASCADE
  );
